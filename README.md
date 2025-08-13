@@ -193,23 +193,6 @@ The application supports both light and dark modes:
 - Theme preference is persisted across sessions
 - Uses Tailwind CSS for consistent styling
 
-## 🔧 Configuration
-
-### MongoDB Schema
-
-The application uses the following main schema:
-
-**Chat Model:**
-
-- `userId`: String (Clerk user ID)
-- `title`: String
-- `messages`: Array of message objects
-  - `role`: 'user' | 'assistant'
-  - `content`: String
-  - `timestamp`: Date
-- `createdAt`: Date
-- `updatedAt`: Date
-
 ## 🤝 Contributing
 
 Contributions are welcome! Please follow these steps:
