@@ -6,10 +6,15 @@ if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
 }
 
-let cached = (global as any).mongoose;
+interface MongooseCache {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+}
+
+let cached = (global as { mongoose?: MongooseCache }).mongoose;
 
 if (!cached) {
-  cached = (global as any).mongoose = { conn: null, promise: null };
+  cached = (global as { mongoose?: MongooseCache }).mongoose = { conn: null, promise: null };
 }
 
 /**
@@ -18,11 +23,11 @@ if (!cached) {
  * Returns cached connection if already established
  */
 async function connectDB() {
-  if (cached.conn) {
+  if (cached?.conn) {
     return cached.conn;
   }
 
-  if (!cached.promise) {
+  if (!cached?.promise) {
     const opts = {
       bufferCommands: false,
       serverSelectionTimeoutMS: 10000,
@@ -31,7 +36,7 @@ async function connectDB() {
       minPoolSize: 2,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
+    cached!.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
       console.log('✅ MongoDB connected successfully');
       return mongoose;
     }).catch((error) => {
@@ -41,13 +46,13 @@ async function connectDB() {
   }
 
   try {
-    cached.conn = await cached.promise;
+    cached!.conn = await cached!.promise;
   } catch (e) {
-    cached.promise = null;
+    cached!.promise = null;
     throw e;
   }
 
-  return cached.conn;
+  return cached!.conn;
 }
 
 export default connectDB;

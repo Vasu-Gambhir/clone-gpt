@@ -59,7 +59,7 @@ export async function POST(
               role: 'system',
               content: 'You are a helpful AI assistant. Be concise and accurate in your responses.',
             },
-            ...chat.messages.map((msg: any) => ({
+            ...chat.messages.map((msg: { role: string; content: string }) => ({
               role: msg.role,
               content: msg.content,
             })),

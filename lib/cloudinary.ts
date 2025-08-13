@@ -86,7 +86,7 @@ export async function deleteFromCloudinary(publicId: string): Promise<void> {
  */
 export function getCloudinaryUrl(
   publicId: string,
-  transformations?: Record<string, any>
+  transformations?: Record<string, unknown>
 ): string {
   return cloudinary.url(publicId, {
     secure: true,

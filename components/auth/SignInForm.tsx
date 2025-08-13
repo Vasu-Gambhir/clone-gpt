@@ -48,9 +48,12 @@ const SignInForm = () => {
         // Handle other statuses (like 2FA)
         setError("Additional verification required");
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Error:", err);
-      setError(err.errors?.[0]?.message || "Invalid email or password");
+      setError(
+        (err as { errors?: { message: string }[] })?.errors?.[0]?.message ||
+        "Invalid email or password"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -72,9 +75,12 @@ const SignInForm = () => {
         redirectUrl: "/sso-callback",
         redirectUrlComplete: "/chat",
       });
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("OAuth error:", err);
-      setError(err.errors?.[0]?.message || "An error occurred");
+      setError(
+        (err as { errors?: { message: string }[] })?.errors?.[0]?.message ||
+        "An error occurred"
+      );
     }
   };
 
@@ -137,7 +143,7 @@ const SignInForm = () => {
           </Button>
 
           <p className="text-sm text-muted-foreground text-center">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link
               href="/signup"
               className="text-primary underline-offset-4 hover:underline"

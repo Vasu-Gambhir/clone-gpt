@@ -21,7 +21,7 @@ export default function ChatPage() {
   const chatId = params.chatId as string;
   const { chat, loading, error, sending, sendMessage, editMessage } =
     useChat(chatId);
-  const { isOpen, toggle } = useSidebar();
+  const { toggle } = useSidebar();
 
   useEffect(() => {
     // Check for initial message in sessionStorage
@@ -137,12 +137,12 @@ export default function ChatPage() {
             loading={sending}
             onEditMessage={editMessage}
             onRegenerateResponse={() => {
-              if (chat?.messages.length > 0) {
+              if (chat?.messages && chat.messages.length > 0) {
                 const lastUserMessage = [...chat.messages]
                   .reverse()
                   .find((m) => m.role === "user");
                 if (lastUserMessage) {
-                  sendMessage(lastUserMessage.content, true);
+                  sendMessage(lastUserMessage.content, undefined, true);
                 }
               }
             }}
@@ -153,7 +153,9 @@ export default function ChatPage() {
           <div className="sticky bottom-0 bg-gradient-to-t from-background via-background/95 to-transparent pt-4 sm:pt-6 pb-3 sm:pb-4">
             <div className="flex justify-center">
               <ChatInput
-                onSendMessage={sendMessage}
+                onSendMessage={async (message: string, files?: { uuid: string; name: string; size: number; mimeType: string; cdnUrl: string; originalUrl: string }[]) => {
+                  await sendMessage(message, files);
+                }}
                 currentChatId={chatId}
                 disabled={sending}
               />

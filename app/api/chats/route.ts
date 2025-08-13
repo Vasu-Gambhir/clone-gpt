@@ -8,7 +8,7 @@ import Chat from '@/lib/models/Chat';
  * Fetches all chat conversations for the authenticated user
  * Returns up to 50 most recent chats sorted by update time
  */
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const { userId } = await auth();
     

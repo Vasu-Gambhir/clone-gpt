@@ -139,7 +139,7 @@ export function useChat(chatId: string | null) {
    * @param files - Optional file attachments
    * @param isRegenerate - Whether this is a response regeneration
    */
-  const sendMessage = async (message: string, files?: any[], isRegenerate: boolean = false) => {
+  const sendMessage = async (message: string, files?: unknown[], isRegenerate: boolean = false) => {
     if (!chatId || !message.trim()) return;
 
     try {
@@ -290,7 +290,7 @@ export function useChat(chatId: string | null) {
                   setError(data.error);
                   break;
               }
-            } catch (e) {
+            } catch {
               // Skip invalid JSON
             }
           }

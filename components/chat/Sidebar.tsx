@@ -104,25 +104,26 @@ export default function Sidebar({ currentChatId }: SidebarProps) {
       // Just do a hard redirect immediately
       window.location.href = "/signup";
       
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Account deletion error:", error);
       
       // Only reopen dialog if the component is still mounted
-      if (error?.message !== 'Client has been destroyed') {
+      const errorObj = error as { message?: string; errors?: { code?: string; message?: string }[] };
+      if (errorObj?.message !== 'Client has been destroyed') {
         // User likely cancelled the browser's confirm dialog or an error occurred
         // Reopen our dialog to show the error
         setShowDeleteDialog(true);
         
         // Check for specific error types
-        if (error?.errors?.[0]?.code === 'user_deletion_unsuccessful') {
+        if (errorObj?.errors?.[0]?.code === 'user_deletion_unsuccessful') {
           setDeleteError("Unable to delete account. Please try again or contact support.");
-        } else if (error?.errors?.[0]?.message) {
-          setDeleteError(error.errors[0].message);
-        } else if (error?.message === 'User denied the request') {
+        } else if (errorObj?.errors?.[0]?.message) {
+          setDeleteError(errorObj.errors[0].message);
+        } else if (errorObj?.message === 'User denied the request') {
           // User cancelled the browser confirm dialog
           setDeleteError("");
-        } else if (error?.message) {
-          setDeleteError(error.message);
+        } else if (errorObj?.message) {
+          setDeleteError(errorObj.message);
         } else {
           setDeleteError("Account deletion was cancelled or failed.");
         }

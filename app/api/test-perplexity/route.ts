@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
@@ -42,7 +42,7 @@ export async function GET() {
       
       const reader = response.body?.getReader();
       if (reader) {
-        let chunks = [];
+        const chunks = [];
         let fullText = '';
         
         while (true) {
@@ -75,6 +75,8 @@ export async function GET() {
 
   } catch (error) {
     console.error('🔥 Test error:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ 
+      error: error instanceof Error ? error.message : 'Unknown error' 
+    }, { status: 500 });
   }
 }

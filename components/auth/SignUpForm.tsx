@@ -60,9 +60,12 @@ const SignUpForm = () => {
           router.push("/chat");
         }
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Error:", err);
-      setError(err.errors?.[0]?.message || "An error occurred during sign up");
+      setError(
+        (err as { errors?: { message: string }[] })?.errors?.[0]?.message ||
+        "An error occurred during sign up"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -84,9 +87,12 @@ const SignUpForm = () => {
         redirectUrl: "/sso-callback",
         redirectUrlComplete: "/chat",
       });
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("OAuth error:", err);
-      setError(err.errors?.[0]?.message || "An error occurred");
+      setError(
+        (err as { errors?: { message: string }[] })?.errors?.[0]?.message ||
+        "An error occurred"
+      );
     }
   };
 
@@ -105,7 +111,7 @@ const SignUpForm = () => {
           </h1>
           {showVerification && (
             <p className="mt-2 text-sm text-muted-foreground">
-              We've sent a verification code to {email}
+              We&apos;ve sent a verification code to {email}
             </p>
           )}
         </section>

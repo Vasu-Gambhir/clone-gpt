@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
         // Extract text content for different file types
         if (file.cdnUrl.startsWith('data:')) {
           // Handle data URLs
-          const [header, base64Data] = file.cdnUrl.split(',');
+          const [, base64Data] = file.cdnUrl.split(',');
           
           if (file.mimeType.startsWith('text/') || file.mimeType.includes('json')) {
             try {

@@ -73,7 +73,7 @@ export async function POST(
                   role: 'system',
                   content: 'You are a helpful AI assistant. Be concise and accurate in your responses.',
                 },
-                ...chat.messages.map((msg: any) => ({
+                ...chat.messages.map((msg: { role: string; content: string }) => ({
                   role: msg.role,
                   content: msg.content,
                 })),
@@ -131,7 +131,7 @@ export async function POST(
                     // Add a small delay to make streaming more visible
                     await new Promise(resolve => setTimeout(resolve, 20));
                   }
-                } catch (e) {
+                } catch {
                   // Skip invalid JSON
                 }
               }

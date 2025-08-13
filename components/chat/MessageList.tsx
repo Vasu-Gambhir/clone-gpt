@@ -6,8 +6,9 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useUser } from '@clerk/nextjs';
-import { Bot, User, Edit2, Check, X, RotateCcw, FileText, Image as ImageIcon, Download, ExternalLink } from 'lucide-react';
+import { Bot, Edit2, Check, X, RotateCcw, FileText, Image as ImageIcon, Download, ExternalLink } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import Image from 'next/image';
 
 interface MessageListProps {
   messages: ChatMessage[];
@@ -122,7 +123,7 @@ export default function MessageList({
    * Renders file attachment UI with previews and download options
    * @param files - Array of file attachments
    */
-  const renderFileAttachments = (files?: any[]) => {
+  const renderFileAttachments = (files?: { uuid?: string; name: string; mimeType: string; size: number; cloudinaryUrl?: string; cdnUrl: string }[]) => {
     if (!files || files.length === 0) return null;
 
     return (
@@ -132,10 +133,13 @@ export default function MessageList({
           {/* Show image previews first */}
           {files.filter(f => f.mimeType.startsWith('image/')).map((file, index) => (
             <div key={file.uuid || `img-${index}`} className="rounded-lg overflow-hidden border border-border/50">
-              <img 
+              <Image 
                 src={file.cloudinaryUrl || file.cdnUrl} 
                 alt={file.name}
+                width={500}
+                height={256}
                 className="max-w-full max-h-64 object-contain bg-muted/20"
+                unoptimized
               />
               <div className="p-2 bg-muted/30 border-t border-border/50 flex items-center justify-between">
                 <span className="text-xs text-muted-foreground truncate">{file.name}</span>

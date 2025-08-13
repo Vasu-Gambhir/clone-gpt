@@ -40,7 +40,7 @@ export async function POST(
     // Build AI context with file information (separate from displayed message)
     let aiContextMessage = message.trim();
     if (files && files.length > 0) {
-      const fileDescriptions = files.map((file: any) => {
+      const fileDescriptions = files.map((file: { name: string; mimeType: string; textContent?: string }) => {
         // Only include text content for text files, not data URLs
         if (file.textContent && !file.textContent.startsWith('[')) {
           return `File: ${file.name}\nContent: ${file.textContent}`;
@@ -81,7 +81,7 @@ export async function POST(
                   role: 'system',
                   content: 'You are a helpful AI assistant. Be concise and accurate in your responses. If files are provided, analyze them and provide relevant insights.',
                 },
-                ...chat.messages.slice(0, -1).map((msg: any) => ({
+                ...chat.messages.slice(0, -1).map((msg: { role: string; content: string }) => ({
                   role: msg.role,
                   content: msg.content,
                 })),
@@ -110,11 +110,9 @@ export async function POST(
           
           // Simulate streaming by sending words gradually
           const words = fullResponse.split(' ');
-          let streamedContent = '';
           
           for (let i = 0; i < words.length; i++) {
             const word = words[i];
-            streamedContent += (i === 0 ? '' : ' ') + word;
             
             controller.enqueue(
               encoder.encode(`data: ${JSON.stringify({ 

@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useRef, KeyboardEvent } from 'react';
+import { useState, useRef } from 'react';
 import { Mic, SendHorizontal, Plus, Loader2, FileText, Image as ImageIcon, X } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { useRouter } from 'next/navigation';
 import { useChats } from '@/lib/hooks/useChat';
 
@@ -37,7 +36,7 @@ export default function ChatInput({
   const [sending, setSending] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [isUploading, setIsUploading] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const { createChat } = useChats();
@@ -83,16 +82,6 @@ export default function ChatInput({
     }
   };
 
-  /**
-   * Handles keyboard shortcuts for message submission
-   * Enter key sends message, Shift+Enter adds new line
-   */
-  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
-    }
-  };
 
   /**
    * Navigates to new chat page
@@ -250,7 +239,7 @@ export default function ChatInput({
           
           <div className="flex-1 min-h-6 max-h-32">
             <textarea
-              ref={inputRef as any}
+              ref={inputRef}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={(e) => {
