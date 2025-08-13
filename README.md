@@ -121,6 +121,11 @@ MONGODB_URI=your_mongodb_connection_string
 # Uploadcare (optional)
 NEXT_PUBLIC_UPLOADCARE_PUBLIC_KEY=your_uploadcare_public_key
 
+# Cloudinary (for image/media management)
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+
 # API Keys for AI services
 OPENAI_API_KEY=your_openai_api_key # or other AI service
 ```
@@ -158,6 +163,63 @@ npm run lint     # Run ESLint
 - **Edit Messages**: Modify sent messages and regenerate responses
 - **File Attachments**: Upload and process files within conversations
 - **Responsive Design**: Optimized for mobile, tablet, and desktop
+
+## ☁️ Cloudinary Integration
+
+This application uses Cloudinary for efficient image and media management throughout the chat experience.
+
+### Features
+
+- **Image Upload & Processing**: Automatically process and optimize uploaded images
+- **Format Transformation**: Convert images to optimal formats (WebP, AVIF) for better performance
+- **Quality Optimization**: Automatic compression while maintaining visual quality
+- **Responsive Images**: Generate multiple sizes for different screen resolutions
+- **Secure URLs**: Signed URLs for protected media access
+
+### Usage in the Application
+
+#### Image Uploads in Chat
+When users upload images in conversations:
+1. Images are uploaded to Cloudinary via the file upload API
+2. Cloudinary returns optimized URLs with transformations
+3. Images are displayed in chat with responsive sizing
+4. Original and processed versions are stored for different use cases
+
+#### Configuration
+Set up your Cloudinary credentials in `.env.local`:
+```env
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+```
+
+#### Common Transformations Used
+- **Auto Format**: `f_auto` - Automatically selects the best format
+- **Auto Quality**: `q_auto` - Optimizes quality based on content
+- **Responsive Sizing**: `c_scale,w_auto` - Scales images responsively
+- **Compression**: Reduces file size while maintaining quality
+
+#### API Integration
+The application integrates Cloudinary through:
+- Upload API for processing new images
+- Transformation URLs for optimized delivery
+- Admin API for managing uploaded assets
+- Webhook integration for processing status updates
+
+### Getting Started with Cloudinary
+
+1. **Create Account**: Sign up at [Cloudinary](https://cloudinary.com/)
+2. **Get Credentials**: Find your cloud name, API key, and secret in the dashboard
+3. **Configure Environment**: Add credentials to your `.env.local` file
+4. **Test Upload**: Use the file upload feature in chat to test integration
+
+### Best Practices
+
+- Use signed URLs for sensitive content
+- Implement proper error handling for upload failures
+- Cache transformed images for better performance
+- Monitor usage and storage limits in Cloudinary dashboard
+- Use webhooks for processing status updates
 
 ## 🎨 Theming
 
