@@ -226,7 +226,7 @@ export default function ChatInput({
       )}
       
       <div className="relative">
-        <div className="flex items-end gap-2 sm:gap-3 rounded-3xl bg-background border border-border/50 shadow-lg focus-within:border-primary/50 focus-within:shadow-primary/10 focus-within:shadow-xl transition-all duration-200 p-2 sm:p-3">
+        <div className="flex items-center gap-2 sm:gap-3 rounded-3xl bg-background border border-border/50 shadow-lg focus-within:border-primary/50 focus-within:shadow-primary/10 focus-within:shadow-xl transition-all duration-200 p-2 sm:p-3">
           <button
             onClick={handlePlusClick}
             className="flex-shrink-0 rounded-xl p-1.5 sm:p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
@@ -267,7 +267,7 @@ export default function ChatInput({
 
           <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
             <button
-              className="rounded-xl p-1.5 sm:p-2 text-muted-foreground hover:bg-muted transition-colors opacity-40 cursor-not-allowed hidden sm:block"
+              className="rounded-xl p-1.5 sm:p-2 text-muted-foreground hover:bg-muted transition-colors opacity-40 cursor-not-allowed"
               aria-label="Voice input"
               disabled
               title="Voice input (coming soon)"
