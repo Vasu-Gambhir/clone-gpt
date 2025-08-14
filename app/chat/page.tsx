@@ -4,12 +4,15 @@ import Sidebar from "@/components/chat/Sidebar";
 import ChatInput from "@/components/chat/ChatInput";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { Menu } from "lucide-react";
+import { useSidebar } from "@/lib/contexts/SidebarContext";
 /**
  * Dashboard Component
  * Main chat interface home page with empty state and prompt suggestions
  * Displays when no specific chat is selected
  */
 export default function Dashboard() {
+  const { toggle } = useSidebar();
   
   return (
     <div className="h-screen bg-background text-foreground flex overflow-hidden">
@@ -18,8 +21,16 @@ export default function Dashboard() {
         
         {/* Header */}
         <header className="w-full flex items-center justify-between p-3 sm:p-4">
-          <div className="flex-1"></div>
-          <div className="flex items-center gap-2">
+          <Button
+            onClick={toggle}
+            variant="ghost"
+            size="icon"
+            className="rounded-lg hover:bg-accent transition-colors md:hidden"
+            title="Toggle sidebar"
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
+          <div className="flex items-center gap-2 ml-auto">
             <ThemeToggle />
             <Button
               variant="secondary"
