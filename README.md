@@ -185,42 +185,6 @@ When users upload images in conversations:
 3. Images are displayed in chat with responsive sizing
 4. Original and processed versions are stored for different use cases
 
-#### Configuration
-Set up your Cloudinary credentials in `.env.local`:
-```env
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
-```
-
-#### Common Transformations Used
-- **Auto Format**: `f_auto` - Automatically selects the best format
-- **Auto Quality**: `q_auto` - Optimizes quality based on content
-- **Responsive Sizing**: `c_scale,w_auto` - Scales images responsively
-- **Compression**: Reduces file size while maintaining quality
-
-#### API Integration
-The application integrates Cloudinary through:
-- Upload API for processing new images
-- Transformation URLs for optimized delivery
-- Admin API for managing uploaded assets
-- Webhook integration for processing status updates
-
-### Getting Started with Cloudinary
-
-1. **Create Account**: Sign up at [Cloudinary](https://cloudinary.com/)
-2. **Get Credentials**: Find your cloud name, API key, and secret in the dashboard
-3. **Configure Environment**: Add credentials to your `.env.local` file
-4. **Test Upload**: Use the file upload feature in chat to test integration
-
-### Best Practices
-
-- Use signed URLs for sensitive content
-- Implement proper error handling for upload failures
-- Cache transformed images for better performance
-- Monitor usage and storage limits in Cloudinary dashboard
-- Use webhooks for processing status updates
-
 ## 🎨 Theming
 
 The application supports both light and dark modes:
@@ -228,40 +192,6 @@ The application supports both light and dark modes:
 - Toggle between themes using the theme switcher in the header
 - Theme preference is persisted across sessions
 - Uses Tailwind CSS for consistent styling
-
-## 🔧 Configuration
-
-### MongoDB Schema
-
-The application uses the following main schema:
-
-**Chat Model:**
-
-- `userId`: String (Clerk user ID)
-- `title`: String
-- `messages`: Array of message objects
-  - `role`: 'user' | 'assistant'
-  - `content`: String
-  - `timestamp`: Date
-- `createdAt`: Date
-- `updatedAt`: Date
-
-## 🚀 Deployment
-
-This application can be deployed on various platforms:
-
-### Vercel (Recommended)
-
-1. Push your code to GitHub
-2. Import the repository in Vercel
-3. Add environment variables
-4. Deploy
-
-### Other Platforms
-
-- **Netlify**: Supports Next.js deployment
-- **Railway**: Easy MongoDB integration
-- **Render**: Full-stack deployment support
 
 ## 🤝 Contributing
 
@@ -272,10 +202,6 @@ Contributions are welcome! Please follow these steps:
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## 🙏 Acknowledgments
 
